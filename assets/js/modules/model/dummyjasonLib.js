@@ -26,6 +26,15 @@ returns selected user as a data object.
 if error no return and error in log
 ----------------------------------------------------------
 
+----------------------------------------------------------
+getAllProducts(myLimit,mySkip) 
+myLimit integer limmits returned users. 
+mySkip integer skips forward from 0
+eks limmit=20 and skip=20 users from 21 to 41
+returns an array with selected product data objects.
+if error no return and error in log
+----------------------------------------------------------
+
 */
 
 /* API endpoints */
@@ -86,6 +95,29 @@ export  function getUserById(myId){
 }
 
 // product functions -------------------------------------------------------------------
+export  function getAllProducts(myLimit,mySkip){
+
+  let apiUrl =`${apiProductEndpoint}?limit=${myLimit}&skip=${mySkip}`;
+  return fetch(apiUrl)
+  .then((response) => {
+   
+      // error checking
+    if (!response.ok) {
+      throw new Error(`Network response was not ok: ${response.status}`);
+    }
+
+    return response.json(); // Parse the response body as JSON
+  })
+
+  .then((data) => {
+    // send data on to view functions
+    return data.products;
+  })
+
+  .catch((error) => {
+    console.error("Error:", error);
+  });
+}
 // cart functions -------------------------------------------------------------------
 // post functions -------------------------------------------------------------------
 
